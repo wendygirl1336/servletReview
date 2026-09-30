@@ -21,6 +21,6 @@ public class UserListController extends HttpServlet {
             return;
         }
         request.setAttribute("users", dao.findAll());
-        request.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(request, response);
+        request.getRequestDispatcher("/users.jsp").forward(request, response);
     }
 }

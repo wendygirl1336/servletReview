@@ -14,12 +14,12 @@ Copy-Item (Join-Path $projectDir "src/main/webapp/*") $webapp -Recurse -Force
 $classes = Join-Path $webapp "WEB-INF/classes"
 $testClasses = Join-Path $runDir "test-classes"
 $sources = (Get-ChildItem (Join-Path $projectDir "src/main/java") -Filter *.java -Recurse).FullName
-java -cp "$libs/ecj.jar" org.eclipse.jdt.internal.compiler.batch.Main -17 -encoding UTF-8 -cp "$libs/tomcat-core.jar" -d $classes $sources
+java -cp "$libs/ecj.jar" org.eclipse.jdt.internal.compiler.batch.Main -17 -encoding UTF-8 -cp "$libs/tomcat-core.jar;$webapp/WEB-INF/lib/mysql-connector-j-8.4.0.jar" -d $classes $sources
 if ($LASTEXITCODE -ne 0) { throw "Application compilation failed" }
 java -cp "$libs/ecj.jar" org.eclipse.jdt.internal.compiler.batch.Main -17 -encoding UTF-8 -cp "$libs/tomcat-core.jar;$classes" -d $testClasses (Join-Path $PSScriptRoot "IntegrationTest.java")
 if ($LASTEXITCODE -ne 0) { throw "Test compilation failed" }
 $classpath = "$libs/*;$classes;$webapp/WEB-INF/lib/*;$testClasses"
-java "-Dtest.mysql.url=$MySqlUrl" "-Dtest.mysql.user=$MySqlUser" -cp $classpath IntegrationTest $webapp (Join-Path $projectDir "database/schema.sql") (Join-Path $runDir "tomcat")
+java --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED "-Dtest.mysql.url=$MySqlUrl" "-Dtest.mysql.user=$MySqlUser" -cp $classpath IntegrationTest $webapp (Join-Path $projectDir "database/schema.sql") (Join-Path $runDir "tomcat")
 if ($LASTEXITCODE -ne 0) { throw "Integration test failed" }
 java -cp $classpath org.apache.jasper.JspC -uriroot $webapp -d (Join-Path $runDir "jsp") -compile -javaEncoding UTF-8 -die1
 if ($LASTEXITCODE -ne 0) { throw "JSP compilation failed" }

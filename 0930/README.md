@@ -1,6 +1,6 @@
 # 6주차 Servlet 회원 관리
 
-디자인은 추가하지 않았습니다. Java 21 / Tomcat 10.1 / MySQL 8.x를 사용합니다.
+공통 메뉴, 입력 폼, 카드와 회원목록 표에 반응형 디자인을 적용했습니다. Java 21 / Tomcat 10.1 / MySQL 8.x를 사용합니다.
 
 ## 실행 설정 (중요)
 
@@ -35,8 +35,8 @@ DB가 실제로 다른 포트에서 실행 중이면 해당 포트를 지정해�
 
 아이디와 role은 요청 파라미터로 변경할 수 없습니다. role은 권한 정보이므로 회원 프로필 수정 대상에서 제외했습니다.
 세션과 화면에 저장된 비밀번호를 넣지 않습니다. 기존 수업 DB의 비밀번호 비교 방식은 유지합니다.
-JSP 출력은 HTML 이스케이프하며, 실제 조회 JSP는 WEB-INF 내부에 둡니다.
-기존 mypage.jsp/users.jsp 주소도 컨트롤러로 이동하므로 직접 접근 시 null 오류가 나지 않습니다.
+JSP 출력은 HTML 이스케이프하며, 마이페이지 JSP는 WEB-INF 내부에 두고 users.jsp는 로그인 확인 후 조회 결과를 표시합니다.
+mypage.jsp는 컨트롤러로 이동합니다. users.jsp는 null 확인과 @SuppressWarnings("unchecked")를 적용해 직접 접근해도 null 오류가 나지 않습니다.
 
 ## 오류 수정
 
@@ -49,7 +49,7 @@ JSP 출력은 HTML 이스케이프하며, 실제 조회 JSP는 WEB-INF 내부에
 
 ## 검증
 
-MySQL 8.4.6의 별도 테스트 인스턴스와 Tomcat 10.1.48에서 **44개 실제 HTTP/MySQL 검증**을 통과했습니다.
+MySQL 8.4.6의 별도 테스트 인스턴스와 Tomcat 10.1.48에서 **46개 실제 HTTP/MySQL 검증**을 통과했습니다.
 Java 컴파일과 모든 JSP 사전 컴파일도 통과했습니다.
 
 테스트는 `tests/IntegrationTest.java`에 있습니다. 테스트용 MySQL 서버에 새 임시 스키마만 만들고 종료 시 제거합니다.

@@ -97,6 +97,9 @@ public class IntegrationTest {
                 check(redirect(post(bob,"/login.do","id","bob","pw","bob-pass"),"/loginOk.jsp"),"cannot update another id");
                 check(!get(alice,"/users.do").body().contains(">admin<"),"role cannot be escalated");
                 check(get(alice,"/login.jsp").body().contains("새이름&lt;script&gt;"),"session display refreshed");
+                response=get(alice,"/users.jsp");
+                check(response.statusCode()==200 && response.body().contains("표시할 회원이 없습니다"),"null member list is safe");
+                check(get(guest,"/assets/site.css").statusCode()==200,"shared stylesheet available");
                 check(redirect(post(secondAlice,"/login.do","id","alice","pw","old-pass"),"/loginFail.jsp"),"old password invalid");
                 check(redirect(post(secondAlice,"/login.do","id","alice","pw","new-pass"),"/loginOk.jsp"),"new password works");
                 check(redirect(post(alice,"/mypage.do","name","유지","pw",""),"/mypage.do?updated=1"),"empty password preserves existing");
