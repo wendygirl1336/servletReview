@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="review.servlet.model.UsersDTO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,9 +12,9 @@
     <%@ include file="top.jsp" %>
 
 <%
-    String lo = (String) application.getAttribute("loginCheck");
+    UsersDTO loginUser = (UsersDTO) session.getAttribute("loginUser");
 
-    if(lo == null) {
+    if (loginUser == null) {
 %>
 
     <h1>로그인</h1>
@@ -39,7 +40,7 @@
     } else {
 %>
 
-    <h1><%= lo %>님, 환영합니다.</h1>
+    <h1><%= loginUser.getName() %>님, 환영합니다.</h1>
 
     <form action="logout.do" method="get">
         <input type="submit" value="로그아웃">
