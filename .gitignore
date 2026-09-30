@@ -1,2 +1,6 @@
 .metadata/
 Servers/
+
+**/db.properties
+**/build/
+**/target/

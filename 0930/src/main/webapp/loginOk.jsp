@@ -1,28 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="review.servlet.model.UsersDTO" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<% if (session.getAttribute("loginUser") == null) {
+    response.sendRedirect(request.getContextPath() + "/login.jsp"); return;
+} %>
+<%@ page import="review.servlet.common.WebSupport,review.servlet.model.UsersDTO" %>
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>로그인 성공</title>
-</head>
+<html lang="ko">
+<head><meta charset="UTF-8"><title>로그인 성공</title></head>
 <body>
-
-    <%@ include file="top.jsp" %>
-
-    <%
-        UsersDTO loginUser = (UsersDTO) session.getAttribute("loginUser");
-
-        if (loginUser == null) {
-            response.sendRedirect("login.jsp");
-            return;
-        }
-    %>
-
-    <h1><%= loginUser.getName() %>님, 로그인 성공!!!!</h1>
-
-    <a href="index.jsp">메인으로</a>
-
-</body>
-</html>
+<%@ include file="/top.jsp" %>
+<h1>로그인 성공</h1>
+<p><%= WebSupport.escape(((UsersDTO) session.getAttribute("loginUser")).getName()) %>님, 로그인 성공!</p>
+<a href="<%= request.getContextPath() %>/index.jsp">메인으로</a>
+</body></html>
