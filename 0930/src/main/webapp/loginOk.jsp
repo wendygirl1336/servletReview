@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="review.servlet.model.UsersDTO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,11 +12,15 @@
     <%@ include file="top.jsp" %>
 
     <%
-        String name =
-            (String) application.getAttribute("loginCheck");
+        UsersDTO loginUser = (UsersDTO) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
     %>
 
-    <h1><%= name %>님, 로그인 성공!!!!</h1>
+    <h1><%= loginUser.getName() %>님, 로그인 성공!!!!</h1>
 
     <a href="index.jsp">메인으로</a>
 
