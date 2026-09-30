@@ -7,6 +7,17 @@
 <title>로그인 성공</title>
 </head>
 <body>
-   <h1>   님, 로그인 성공!!!!</h1>
+
+    <%@ include file="top.jsp" %>
+
+    <%
+        String name =
+            (String) application.getAttribute("loginCheck");
+    %>
+
+    <h1><%= name %>님, 로그인 성공!!!!</h1>
+
+    <a href="index.jsp">메인으로</a>
+
 </body>
 </html>

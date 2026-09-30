@@ -1,0 +1,49 @@
+package review.servlet.common;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class JDBCutil {
+
+	static final String URL= "jdbc:mysql://localhost:3307/springdb";
+	static final String USER="root";
+	static final String PW="dongyang";
+		
+	public static Connection getConnection() {		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			return DriverManager.getConnection( URL , USER, PW);
+			
+		} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+		}
+		return null;
+		
+	}
+	
+	public static void close(PreparedStatement pstmt, Connection conn) {
+		try {
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void close(ResultSet rs, PreparedStatement pstmt, Connection conn) {
+		try {
+			rs.close();
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}	
+	
+	
+	
+	
+}

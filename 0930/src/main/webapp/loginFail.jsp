@@ -7,6 +7,12 @@
 <title>로그인 실패!</title>
 </head>
 <body>
-	<h1> 아이디나 암호를 다시 확인해주세요! </h1>
+
+    <%@ include file="top.jsp" %>
+
+    <h1>아이디나 암호를 다시 확인해주세요!</h1>
+
+    <a href="login.jsp">다시 로그인</a>
+
 </body>
 </html>
